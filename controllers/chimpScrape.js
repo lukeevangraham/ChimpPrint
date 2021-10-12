@@ -26,11 +26,10 @@ module.exports = {
       );
 
       res.json({
-        articles: result
-      })
+        articles: result,
+      });
 
       // console.log("ISS: ", result);
-
     } catch (e) {
       console.log(e);
     }

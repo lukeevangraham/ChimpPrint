@@ -21,12 +21,14 @@ let getCampaign = async (url) => {
           // let images = []
 
           articles.push({
+            headline: $(element).text().trim().split("\n", 1),
             text: $(element).text().trim(),
             image: {
               src: $(element).find("img").attr("src"),
               alt: $(element).find("img").attr("alt"),
             },
             html: $(element).html(),
+            selected: true,
           });
           break;
       }
@@ -36,8 +38,6 @@ let getCampaign = async (url) => {
       //     ? console.log("divider")
       //     : console.log("ELEMENT", $(element).text().trim());
     });
-
-  console.log("ARTICLES: ", articles);
 
   return articles;
 

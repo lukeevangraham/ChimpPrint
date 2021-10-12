@@ -8,7 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-const SelectCampaigns = ({ campaigns, changeCampaigns }) => {
+const SelectCampaigns = ({ campaigns, changeCampaigns, setArticles }) => {
   const selectContent = async (e) => {
     e.preventDefault();
 
@@ -20,7 +20,8 @@ const SelectCampaigns = ({ campaigns, changeCampaigns }) => {
       issues: campaignsToGet,
     });
 
-    console.log("RES: ", response.data.articles)
+    console.log("RES: ", response.data.articles);
+    setArticles(response.data.articles);
 
     return response;
   };
@@ -38,7 +39,9 @@ const SelectCampaigns = ({ campaigns, changeCampaigns }) => {
 
   return (
     <>
-      <Button variant="contained" onClick={selectContent}>Select Content</Button>
+      <Button variant="contained" onClick={selectContent}>
+        Select Content
+      </Button>
       <List>
         {campaigns.map((campaign, index) => (
           <ListItem key={campaign.url} disablePadding>
