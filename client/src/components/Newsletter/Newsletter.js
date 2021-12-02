@@ -84,6 +84,8 @@ const styles = StyleSheet.create({
     height: "auto",
     // flexGrow: "0",
     // flexShrink : "0"
+    objectFit: "contain",
+    objectPosition: "0% 0%"
   }
 });
 
@@ -95,6 +97,22 @@ const Newsletter = ({ orgName, articles }) => {
 
   const longArticles = articles[0].filter(article => article.text.length >= 400)
   const shortArticles = articles[0].filter(article => article.text.length > 400)
+
+  const formatTitleAndText = (article) => (
+    <View>
+      <Text style={styles.title}>{article.headline[0].length >= 100 ? null : (`${article.headline}`)}</Text>
+      {
+        article.text.split("\n").map((text, index) =>
+          index > 0 && text.length > 1 ? (
+            <Text style={styles.text}>{text}</Text>
+          ) :
+            text.length >= 100 ? (
+              <Text style={styles.text}>{text}</Text>
+            ) : null
+        )
+      }
+    </View>
+  )
 
 
   return (
@@ -146,15 +164,13 @@ const Newsletter = ({ orgName, articles }) => {
           </Text>
 
           {articles[0].map((article) => {
-            console.log("article", article)
             if (article.image.src) {
               if (article.text.length <= 400) {
                 return (
                   <View style={styles.shortArticle}>
                     <Image style={styles.shortArticleImage} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
                     <View style={styles.shortArticleText}>
-                      <Text style={styles.title}>{article.headline[0].length >= 100 ? null : (article.headline)}</Text>
-                      <Text>{article.headline[0].length >= 100 ? article.text.split("\n") : article.text.split("\n").slice(1)}</Text>
+                      {formatTitleAndText(article)}
                     </View>
                   </View>
                 )
@@ -163,15 +179,7 @@ const Newsletter = ({ orgName, articles }) => {
                   <View style={styles.article}>
                     <Image style={styles.image} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
                     {/* If headline is less than 100 words show it with heading */}
-                    <Text style={styles.title}>{article.headline[0].length >= 100 ? null : (article.headline)}</Text>
-                    {article.text.split("\n").map((text, index) =>
-                      index > 0 && text.length > 1 ? (
-                        <Text style={styles.text}>{text}</Text>
-                      ) :
-                        text.length >= 100 ? (
-                          <Text style={styles.text}>{text}</Text>
-                        ) : null
-                    )}
+                    {formatTitleAndText(article)}
                   </View>
                 )
               }
@@ -180,9 +188,7 @@ const Newsletter = ({ orgName, articles }) => {
               return (
 
                 <View style={styles.article}>
-                  <Text style={styles.text}>
-                    {article.text.split("\n")}
-                  </Text>
+                  {formatTitleAndText(article)}
                 </View>
               )
 
