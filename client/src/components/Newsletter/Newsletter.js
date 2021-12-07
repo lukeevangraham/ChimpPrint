@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   image: {
     maxWidth: "50%",
+    height: "auto",
     marginBottom: 7
   },
   pageNumber: {
@@ -61,15 +62,14 @@ const styles = StyleSheet.create({
     fontFamily: "Assistant"
   },
   article: {
-    borderBottom: "1 solid grey",
-    marginBottom: 10
+    // borderBottom: "1 solid grey",
+    // marginBottom: 10
     // backgroundColor: "red"
   },
   shortArticle: {
     flexDirection: "row",
-    borderBottom: "1 solid grey",
-    marginBottom: 10,
-    paddingBottom: "12px"
+    // borderBottom: "1 solid grey",
+    // marginBottom: 10,
   },
   shortArticleText: {
     marginRight: 185,
@@ -85,7 +85,12 @@ const styles = StyleSheet.create({
     // flexGrow: "0",
     // flexShrink : "0"
     objectFit: "contain",
-    objectPosition: "0% 0%"
+    objectPosition: "0% 0%",
+    paddingBottom: 10
+  },
+  spacer: {
+    borderBottom: "1 solid grey",
+    marginBottom: 10,
   }
 });
 
@@ -100,7 +105,7 @@ const Newsletter = ({ orgName, articles }) => {
 
   const formatTitleAndText = (article) => (
     <View>
-      <Text style={styles.title}>{article.headline[0].length >= 100 ? null : (`${article.headline}`)}</Text>
+      <Text minPresenceAhead={24} style={styles.title}>{article.headline[0].length >= 100 ? null : (`${article.headline}`)}</Text>
       {
         article.text.split("\n").map((text, index) =>
           index > 0 && text.length > 1 ? (
@@ -125,9 +130,9 @@ const Newsletter = ({ orgName, articles }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            flexBasis: "97%",
-            margin: "0 10",
-            padding: "10",
+            flexBasis: "100%",
+            margin: "0",
+            padding: "10 0",
             fontSize: 11,
           }}
         >
@@ -140,11 +145,11 @@ const Newsletter = ({ orgName, articles }) => {
             })}
           </Text>
         </View>
-        <View
+        <View 
           style={{
             // width: "100%",
             margin: "10 0",
-            padding: 10,
+            padding: "10 0",
           }}
         >
           <Text
@@ -167,34 +172,38 @@ const Newsletter = ({ orgName, articles }) => {
             if (article.image.src) {
               if (article.text.length <= 400) {
                 return (
-                  <View style={styles.shortArticle}>
-                    <Image style={styles.shortArticleImage} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
-                    <View style={styles.shortArticleText}>
-                      {formatTitleAndText(article)}
+                  <View style={styles.spacer}>
+                    <View style={styles.shortArticle}>
+                      <Image style={styles.shortArticleImage} minPresenceAhead={30} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
+                      <View style={styles.shortArticleText}>
+                        {formatTitleAndText(article)}
+                      </View>
                     </View>
                   </View>
+
                 )
               } else {
                 return (
-                  <View style={styles.article}>
-                    <Image style={styles.image} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
-                    {/* If headline is less than 100 words show it with heading */}
-                    {formatTitleAndText(article)}
+                  <View style={styles.spacer}>
+                    <View style={styles.article}>
+                      <Image style={styles.image} minPresenceAhead={1} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
+                      {/* If headline is less than 100 words show it with heading */}
+                      {formatTitleAndText(article)}
+                    </View>
                   </View>
                 )
               }
             } else {
               console.log("NO IMAGE!")
               return (
-
-                <View style={styles.article}>
-                  {formatTitleAndText(article)}
+                <View style={styles.spacer}>
+                  <View style={styles.article}>
+                    {formatTitleAndText(article)}
+                  </View>
                 </View>
               )
-
-
-
             }
+
           })}
         </View>
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
