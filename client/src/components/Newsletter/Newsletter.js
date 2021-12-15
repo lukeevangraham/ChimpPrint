@@ -19,6 +19,10 @@ Font.register({
       src: "http://fonts.gstatic.com/s/assistant/v1/xXstfiHQzjB9j5ZxYTBoZy3USBnSvpkopQaUR-2r7iU.ttf",
       fontWeight: 200,
     },
+    {
+      src: "http://fonts.gstatic.com/s/assistant/v1/xXstfiHQzjB9j5ZxYTBoZy3USBnSvpkopQaUR-2r7iU.ttf",
+      fontWeight: 600,
+    },
   ],
 });
 
@@ -43,8 +47,14 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontFamily: "Cardo",
-    margin: "0 0 12 0",
-    lineHeight: "1.5"
+    margin: "0 0 9 0",
+    lineHeight: "1.5",
+  },
+  textLast: {
+    fontSize: 12,
+    fontFamily: "Cardo",
+    margin: "0",
+    lineHeight: "1.5",
   },
   image: {
     maxWidth: "50%",
@@ -75,7 +85,6 @@ const styles = StyleSheet.create({
     marginRight: 185,
     marginLeft: 10,
     fontSize: 12,
-    // flexGrow: "0",
     fontFamily: "Cardo",
     lineHeight: "1.5"
   },
@@ -91,7 +100,8 @@ const styles = StyleSheet.create({
   spacer: {
     borderBottom: "1 solid grey",
     marginBottom: 10,
-  }
+    paddingBottom: 10
+  },
 });
 
 const Newsletter = ({ orgName, articles }) => {
@@ -103,13 +113,17 @@ const Newsletter = ({ orgName, articles }) => {
   const longArticles = articles[0].filter(article => article.text.length >= 400)
   const shortArticles = articles[0].filter(article => article.text.length > 400)
 
+  const formatListItem = item => (
+    <Text>&bull; {item.substring(1)}</Text>
+  )
+
   const formatTitleAndText = (article) => (
     <View>
       <Text minPresenceAhead={24} style={styles.title}>{article.headline[0].length >= 100 ? null : (`${article.headline}`)}</Text>
       {
-        article.text.split("\n").map((text, index) =>
+        article.text.split("\n").map((text, index, array) =>
           index > 0 && text.length > 1 ? (
-            <Text style={styles.text}>{text}</Text>
+             text.charAt(0) === "\t" ? formatListItem(text) : index === array.length - 1 ? <Text style={styles.textLast}>{text}</Text> : <Text style={styles.text}>{text}</Text>
           ) :
             text.length >= 100 ? (
               <Text style={styles.text}>{text}</Text>
@@ -123,20 +137,24 @@ const Newsletter = ({ orgName, articles }) => {
   return (
     <Document>
       <Page size="LETTER" style={styles.page}>
-        <View
+        <View fixed
           style={{
             borderBottom: "2 solid black",
-            flexGrow: 1,
+            flexGrow: 0,
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
             flexBasis: "100%",
-            margin: "0",
-            padding: "10 0",
+            marginBottom: "10",
+            padding: "8",
             fontSize: 11,
+            backgroundColor: "#e8e8e8",
+            textTransform: "uppercase",
+            fontFamily: "Assistant",
+            fontWeight: "900"
           }}
         >
-          <Text>{orgName}</Text>
+          <Text style={{ textTransform: "uppercase" }}>{orgName}</Text>
           <Text>
             {new Date().toLocaleDateString("en-US", {
               month: "long",
@@ -145,18 +163,12 @@ const Newsletter = ({ orgName, articles }) => {
             })}
           </Text>
         </View>
-        <View 
-          style={{
-            // width: "100%",
-            margin: "10 0",
-            padding: "10 0",
-          }}
-        >
+        <View>
           <Text
             fontWeight="thin"
             style={{
               fontSize: 50,
-              marginTop: -20,
+              marginTop: -10,
               textAlign: "center",
               letterSpacing: 3,
               fontFamily: "Assistant",
@@ -174,7 +186,7 @@ const Newsletter = ({ orgName, articles }) => {
                 return (
                   <View style={styles.spacer}>
                     <View style={styles.shortArticle}>
-                      <Image style={styles.shortArticleImage} minPresenceAhead={30} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
+                      <Image style={styles.shortArticleImage} minPresenceAhead={80} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
                       <View style={styles.shortArticleText}>
                         {formatTitleAndText(article)}
                       </View>
