@@ -110,8 +110,8 @@ const Newsletter = ({ orgName, articles }) => {
     src: "https://fonts.googleapis.com/css2?family=Assistant&display=swap",
   });
 
-  const longArticles = articles[0].filter(article => article.text.length >= 400)
-  const shortArticles = articles[0].filter(article => article.text.length > 400)
+  const longArticles = articles.filter(article => article.text.length >= 400)
+  const shortArticles = articles.filter(article => article.text.length > 400)
 
   const formatListItem = item => (
     <Text>&bull; {item.substring(1)}</Text>
@@ -180,7 +180,7 @@ const Newsletter = ({ orgName, articles }) => {
             Newsletter
           </Text>
 
-          {articles[0].map((article) => {
+          {articles.map((article) => {
             if (article.image.src) {
               if (article.text.length <= 400) {
                 return (
@@ -218,9 +218,12 @@ const Newsletter = ({ orgName, articles }) => {
 
           })}
         </View>
+        <View>
+<Text></Text>
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
           `${pageNumber} / ${totalPages}`
-        )} fixed></Text>
+          )} fixed></Text>
+          </View>
       </Page>
     </Document >
   );

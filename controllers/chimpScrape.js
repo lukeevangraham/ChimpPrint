@@ -16,7 +16,7 @@ module.exports = {
   },
   campaign: async (req, res) => {
     try {
-      console.log("BODY: ", req.body.issues[0].url);
+      console.log("BODY: ", req.body.issues);
 
       // let response = await getCampaign(req.body.issues[0].url)
 

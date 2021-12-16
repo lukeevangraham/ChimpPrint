@@ -6,13 +6,22 @@ import { PDFViewer } from "@react-pdf/renderer";
 
 const SelectArticles = ({ articles }) => {
   let [orgName, setOrgName] = useState("");
+  let [selectedArticles, setSelectedArticles] = useState(articles[0])
+
+  const displayArticles = campaign => (
+    campaign.map((article, index) => (
+      <div key={index}>
+        {article.headline}{console.log("ART: ", article)}
+      </div>
+    ))
+  )
 
   return (
     <>
       <Box sx={{ display: "grid", gridTemplateColumns: "70% 1fr", height: "100vh" }}>
-        <div style={{ gridColumn: "1 / 2", padding: "2rem"}}>
+        <div style={{ gridColumn: "1 / 2", padding: "2rem" }}>
           <PDFViewer width="100%" height="100%">
-            <Newsletter orgName={orgName} articles={articles} />
+            <Newsletter orgName={orgName} articles={selectedArticles} />
           </PDFViewer>
           {/* News
           <Box sx={{ display: "grid", gridTemplateRows: "12px 35px 17px 1fr" }}>
@@ -31,12 +40,20 @@ const SelectArticles = ({ articles }) => {
             />
           </div>
           <div>
-            Articles
-            {articles[0].map((article, index) => (
+            Articles:
+            {console.log("ARTICLES: ", articles)}
+            {articles.map((campaign) => (
+              <ul>
+                {campaign.map(article => (
+                  <li>{article.headline}</li>
+                ))}
+              </ul>
+            ))}
+            {/* {articles[0].map((article, index) => (
               <div key={index}>
                 {article.headline}
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
         {/* {articles[0].map((article) => (

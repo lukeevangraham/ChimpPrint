@@ -14,8 +14,6 @@ const SelectCampaigns = ({ campaigns, changeCampaigns, setArticles }) => {
 
     const campaignsToGet = campaigns.filter((c) => c.selected);
 
-    console.log("to get: ", campaignsToGet);
-
     const response = await axios.post(`/chimpScrape/chimpPullContent`, {
       issues: campaignsToGet,
     });
