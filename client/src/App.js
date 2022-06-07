@@ -15,7 +15,6 @@ const App = () => {
   let [archive, setArchive] = useState([]);
   let [articles, setArticles] = useState([]);
 
-  console.log("Archive: ", archive);
 
   return (
     <>

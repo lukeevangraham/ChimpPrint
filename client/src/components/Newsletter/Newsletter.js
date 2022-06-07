@@ -34,10 +34,9 @@ Font.register({
   ],
 });
 
-
 const styles = StyleSheet.create({
   page: {
-    padding: "20 20 60 20"
+    padding: "20 20 60 20",
   },
   title: {
     fontFamily: "Assistant",
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
   image: {
     maxWidth: "50%",
     height: "auto",
-    marginBottom: 7
+    marginBottom: 7,
   },
   pageNumber: {
     position: "absolute",
@@ -67,9 +66,9 @@ const styles = StyleSheet.create({
     bottom: 30,
     left: 0,
     right: 0,
-    textAlign: 'center',
-    color: 'grey',
-    fontFamily: "Assistant"
+    textAlign: "center",
+    color: "grey",
+    fontFamily: "Assistant",
   },
   article: {
     // borderBottom: "1 solid grey",
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 12,
     fontFamily: "Cardo",
-    lineHeight: "1.5"
+    lineHeight: "1.5",
   },
   shortArticleImage: {
     width: "33%",
@@ -95,12 +94,12 @@ const styles = StyleSheet.create({
     // flexShrink : "0"
     objectFit: "contain",
     objectPosition: "0% 0%",
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   spacer: {
     borderBottom: "1 solid grey",
     marginBottom: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
 });
 
@@ -110,34 +109,39 @@ const Newsletter = ({ orgName, articles }) => {
     src: "https://fonts.googleapis.com/css2?family=Assistant&display=swap",
   });
 
-  const longArticles = articles.filter(article => article.text.length >= 400)
-  const shortArticles = articles.filter(article => article.text.length > 400)
+  const longArticles = articles.filter((article) => article.text.length >= 400);
+  const shortArticles = articles.filter((article) => article.text.length > 400);
 
-  const formatListItem = item => (
-    <Text>&bull; {item.substring(1)}</Text>
-  )
+  const formatListItem = (item) => <Text>&bull; {item.substring(1)}</Text>;
 
   const formatTitleAndText = (article) => (
     <View>
-      <Text minPresenceAhead={24} style={styles.title}>{article.headline[0].length >= 100 ? null : (`${article.headline}`)}</Text>
-      {
-        article.text.split("\n").map((text, index, array) =>
+      <Text minPresenceAhead={24} style={styles.title}>
+        {article.headline[0].length >= 100 ? null : `${article.headline}`}
+      </Text>
+      {article.text
+        .split("\n")
+        .map((text, index, array) =>
           index > 0 && text.length > 1 ? (
-             text.charAt(0) === "\t" ? formatListItem(text) : index === array.length - 1 ? <Text style={styles.textLast}>{text}</Text> : <Text style={styles.text}>{text}</Text>
-          ) :
-            text.length >= 100 ? (
+            text.charAt(0) === "\t" ? (
+              formatListItem(text)
+            ) : index === array.length - 1 ? (
+              <Text style={styles.textLast}>{text}</Text>
+            ) : (
               <Text style={styles.text}>{text}</Text>
-            ) : null
-        )
-      }
+            )
+          ) : text.length >= 100 ? (
+            <Text style={styles.text}>{text}</Text>
+          ) : null
+        )}
     </View>
-  )
-
+  );
 
   return (
     <Document>
       <Page size="LETTER" style={styles.page}>
-        <View fixed
+        <View
+          fixed
           style={{
             borderBottom: "2 solid black",
             flexGrow: 0,
@@ -151,7 +155,7 @@ const Newsletter = ({ orgName, articles }) => {
             backgroundColor: "#e8e8e8",
             textTransform: "uppercase",
             fontFamily: "Assistant",
-            fontWeight: "900"
+            fontWeight: "900",
           }}
         >
           <Text style={{ textTransform: "uppercase" }}>{orgName}</Text>
@@ -174,58 +178,68 @@ const Newsletter = ({ orgName, articles }) => {
               fontFamily: "Assistant",
               fontWeight: 200,
               borderBottom: "1 solid grey",
-              marginBottom: 10
+              marginBottom: 10,
             }}
           >
             Newsletter
           </Text>
 
-          {articles.map((article) => {
+          {articles.map((article, index) => {
             if (article.image.src) {
               if (article.text.length <= 400) {
                 return (
-                  <View style={styles.spacer}>
+                  <View key={index} style={styles.spacer}>
                     <View style={styles.shortArticle}>
-                      <Image style={styles.shortArticleImage} minPresenceAhead={80} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
+                      <Image
+                        style={styles.shortArticleImage}
+                        minPresenceAhead={80}
+                        src={`https://cors-anywhere.herokuapp.com/${article.image.src}`}
+                      />
                       <View style={styles.shortArticleText}>
                         {formatTitleAndText(article)}
                       </View>
                     </View>
                   </View>
-
-                )
+                );
               } else {
                 return (
-                  <View style={styles.spacer}>
+                  <View key={index} style={styles.spacer}>
                     <View style={styles.article}>
-                      <Image style={styles.image} minPresenceAhead={1} src={`https://cors-anywhere.herokuapp.com/${article.image.src}`} />
+                      <Image
+                        style={styles.image}
+                        minPresenceAhead={1}
+                        src={`https://cors-anywhere.herokuapp.com/${article.image.src}`}
+                      />
                       {/* If headline is less than 100 words show it with heading */}
                       {formatTitleAndText(article)}
                     </View>
                   </View>
-                )
+                );
               }
             } else {
-              console.log("NO IMAGE!")
+              console.log("NO IMAGE!");
               return (
-                <View style={styles.spacer}>
+                <View key={index} style={styles.spacer}>
                   <View style={styles.article}>
                     {formatTitleAndText(article)}
                   </View>
                 </View>
-              )
+              );
             }
-
           })}
         </View>
         <View>
-<Text></Text>
-        <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
-          `${pageNumber} / ${totalPages}`
-          )} fixed></Text>
-          </View>
+          <Text></Text>
+          <Text
+            style={styles.pageNumber}
+            render={({ pageNumber, totalPages }) =>
+              `${pageNumber} / ${totalPages}`
+            }
+            fixed
+          ></Text>
+        </View>
       </Page>
-    </Document >
+    </Document>
   );
 };
 

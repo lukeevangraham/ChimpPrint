@@ -18,8 +18,9 @@ const SelectCampaigns = ({ campaigns, changeCampaigns, setArticles }) => {
       issues: campaignsToGet,
     });
 
-    console.log("RES: ", response.data.articles);
-    setArticles(response.data.articles);
+
+
+    setArticles(response.data.articles.flat());
 
     return response;
   };
