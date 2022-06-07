@@ -109,6 +109,8 @@ const Newsletter = ({ orgName, articles }) => {
     src: "https://fonts.googleapis.com/css2?family=Assistant&display=swap",
   });
 
+  console.log("ARTICLES [Newsletter]: ", articles)
+
   const longArticles = articles.filter((article) => article.text.length >= 400);
   const shortArticles = articles.filter((article) => article.text.length > 400);
 
@@ -217,7 +219,7 @@ const Newsletter = ({ orgName, articles }) => {
                 );
               }
             } else {
-              console.log("NO IMAGE!");
+              // console.log("NO IMAGE!");
               return (
                 <View key={index} style={styles.spacer}>
                   <View style={styles.article}>

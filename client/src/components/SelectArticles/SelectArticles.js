@@ -6,7 +6,9 @@ import { PDFViewer } from "@react-pdf/renderer";
 
 const SelectArticles = ({ articles }) => {
   let [orgName, setOrgName] = useState("");
-  let [selectedArticles, setSelectedArticles] = useState(articles);
+  let [selectedArticles, setSelectedArticles] = useState([
+    ...Array(articles.length).keys(),
+  ]);
 
   const displayArticles = (campaign) =>
     campaign.map((article, index) => (
@@ -17,13 +19,18 @@ const SelectArticles = ({ articles }) => {
     ));
 
   const toggleArticleSelection = (e) => {
-    console.log("index: ", e.target);
-    console.log("checked? ", e.target.checked)
     if (e.target.checked) {
-      console.log("RESTORING")
+      // RETURNING AN ARTICLE'S INDEX TO 'SELECTED ARTICLES'
+
+      setSelectedArticles(
+        [...selectedArticles, e.target.id].sort((a, b) => a - b)
+      );
     } else if (!e.target.checked) {
-      console.log("REMOVING", e.target.id)
-      setSelectedArticles(articles.filter((article, index) => index != e.target.id))
+      // REMOVING AN ARTICLE'S INDEX FROM 'SELECTED ARTICLES'
+
+      setSelectedArticles(
+        selectedArticles.filter((article) => article != e.target.id)
+      );
     }
   };
 
@@ -38,7 +45,7 @@ const SelectArticles = ({ articles }) => {
       >
         <div style={{ gridColumn: "1 / 2", padding: "2rem" }}>
           <PDFViewer width="100%" height="100%">
-            <Newsletter orgName={orgName} articles={selectedArticles} />
+            <Newsletter orgName={orgName} articles={selectedArticles.map(article => articles[article])} />
           </PDFViewer>
           {/* News
           <Box sx={{ display: "grid", gridTemplateRows: "12px 35px 17px 1fr" }}>
@@ -58,8 +65,7 @@ const SelectArticles = ({ articles }) => {
           </div>
           <div>
             Articles:
-            <ul>
-              {console.log("Selected Articles: ", selectedArticles)}
+            <ul style={{ listStyle: "none" }}>
               {articles.map((article, index) => (
                 <li key={index}>
                   <label>
