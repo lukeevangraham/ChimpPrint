@@ -10,14 +10,6 @@ const SelectArticles = ({ articles }) => {
     ...Array(articles.length).keys(),
   ]);
 
-  const displayArticles = (campaign) =>
-    campaign.map((article, index) => (
-      <div key={index}>
-        {article.headline}
-        {console.log("ART: ", article)}
-      </div>
-    ));
-
   const toggleArticleSelection = (e) => {
     if (e.target.checked) {
       // RETURNING AN ARTICLE'S INDEX TO 'SELECTED ARTICLES'

@@ -204,6 +204,7 @@ const Newsletter = ({ orgName, articles }) => {
                   </View>
                 );
               } else {
+                console.log("Long one: ", article)
                 return (
                   <View key={index} style={styles.spacer}>
                     <View style={styles.article}>
