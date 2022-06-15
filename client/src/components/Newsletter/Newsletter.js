@@ -109,7 +109,7 @@ const Newsletter = ({ orgName, articles }) => {
     src: "https://fonts.googleapis.com/css2?family=Assistant&display=swap",
   });
 
-  console.log("ARTICLES [Newsletter]: ", articles)
+  console.log("ARTICLES [Newsletter]: ", articles);
 
   const longArticles = articles.filter((article) => article.text.length >= 400);
   const shortArticles = articles.filter((article) => article.text.length > 400);
@@ -118,6 +118,7 @@ const Newsletter = ({ orgName, articles }) => {
 
   const formatTitleAndText = (article) => (
     <View>
+      {console.log("TEXT: ", article.text.split("\n"))}
       <Text minPresenceAhead={24} style={styles.title}>
         {article.headline[0].length >= 100 ? null : `${article.headline}`}
       </Text>
@@ -132,6 +133,7 @@ const Newsletter = ({ orgName, articles }) => {
             ) : (
               <Text style={styles.text}>{text}</Text>
             )
+            // DON'T MAKE A BIG HEADING IF THE ARTICLE STARTS WITH A LONG SENTENCE
           ) : text.length >= 100 ? (
             <Text style={styles.text}>{text}</Text>
           ) : null
@@ -204,7 +206,7 @@ const Newsletter = ({ orgName, articles }) => {
                   </View>
                 );
               } else {
-                console.log("Long one: ", article)
+                // RENDER LONG TEXT ARTICLE
                 return (
                   <View key={index} style={styles.spacer}>
                     <View style={styles.article}>
@@ -231,16 +233,13 @@ const Newsletter = ({ orgName, articles }) => {
             }
           })}
         </View>
-        <View>
-          <Text></Text>
-          <Text
-            style={styles.pageNumber}
-            render={({ pageNumber, totalPages }) =>
-              `${pageNumber} / ${totalPages}`
-            }
-            fixed
-          ></Text>
-        </View>
+        <Text
+          style={styles.pageNumber}
+          render={({ pageNumber, totalPages }) =>
+            `${pageNumber} / ${totalPages}`
+          }
+          fixed
+        ></Text>
       </Page>
     </Document>
   );
