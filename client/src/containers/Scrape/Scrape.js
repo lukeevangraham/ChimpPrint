@@ -18,7 +18,9 @@ const Scrape = ({ onFormSubmit }) => {
 
   const getArchiveListForm = (
     <>
-      <div>Enter a MailChimp Campaign Archive URL to source from</div>
+      <div style={{ marginBottom: "1rem" }}>
+        Enter a MailChimp Campaign Archive URL to source from:
+      </div>
       <TextField
         variant="standard"
         onChange={(e) => setArchiveUrl(e.target.value)}
