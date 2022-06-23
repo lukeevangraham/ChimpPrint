@@ -5,7 +5,10 @@ import Newsletter from "../Newsletter/Newsletter";
 import { PDFViewer } from "@react-pdf/renderer";
 
 const SelectArticles = ({ articles }) => {
-  let [orgName, setOrgName] = useState("");
+  let [churchName, setChurchName] = useState("RB Community Church");
+  let [publicationTitle, setPublicationTitle] = useState("Newsletter");
+  let [footerText, setFooterText] = useState("rbcommunity.org");
+  let [subheading, setSubheading] = useState("For people who like to read");
   let [selectedArticles, setSelectedArticles] = useState([
     ...Array(articles.length).keys(),
   ]);
@@ -37,7 +40,13 @@ const SelectArticles = ({ articles }) => {
       >
         <div style={{ gridColumn: "1 / 2", padding: "2rem" }}>
           <PDFViewer width="100%" height="100%">
-            <Newsletter orgName={orgName} articles={selectedArticles.map(article => articles[article])} />
+            <Newsletter
+              orgName={churchName}
+              newsletterName={publicationTitle}
+              footerText={footerText}
+              subheading={subheading}
+              articles={selectedArticles.map((article) => articles[article])}
+            />
           </PDFViewer>
           {/* News
           <Box sx={{ display: "grid", gridTemplateRows: "12px 35px 17px 1fr" }}>
@@ -47,15 +56,36 @@ const SelectArticles = ({ articles }) => {
         </div>
         <div style={{ gridColumn: "2 / 3" }}>
           <div>
-            <div>Heading</div>
             <TextField
-              label="Organization Name"
+              label="Church Name"
               variant="outlined"
-              value={orgName}
-              onChange={(e) => setOrgName(e.target.value)}
+              value={churchName}
+              sx={{ width: "100%", marginTop: "2rem" }}
+              onChange={(e) => setChurchName(e.target.value)}
+            />
+            <TextField
+              label="Publication Title"
+              variant="outlined"
+              value={publicationTitle}
+              sx={{ width: "100%", marginTop: "1rem" }}
+              onChange={(e) => setPublicationTitle(e.target.value)}
+            />
+            <TextField
+              label="Subheading"
+              variant="outlined"
+              value={subheading}
+              sx={{ width: "100%", marginTop: "1rem" }}
+              onChange={(e) => setSubheading(e.target.value)}
+            />
+            <TextField
+              label="Footer Text"
+              variant="outlined"
+              value={footerText}
+              sx={{ width: "100%", marginTop: "1rem" }}
+              onChange={(e) => setFooterText(e.target.value)}
             />
           </div>
-          <div>
+          <div style={{ marginTop: "2rem" }}>
             Articles:
             <ul style={{ listStyle: "none" }}>
               {articles.map((article, index) => (

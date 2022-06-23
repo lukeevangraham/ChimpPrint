@@ -118,7 +118,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const Newsletter = ({ orgName, articles }) => {
+const Newsletter = ({
+  orgName,
+  newsletterName,
+  footerText,
+  subheading,
+  articles,
+}) => {
   Font.register({
     family: "Roboto",
     src: "https://fonts.googleapis.com/css2?family=Assistant&display=swap",
@@ -194,11 +200,30 @@ const Newsletter = ({ orgName, articles }) => {
               fontFamily: "Assistant",
               fontWeight: 200,
               borderBottom: "1 solid grey",
-              marginBottom: 10,
+              // marginBottom: 10,
             }}
           >
-            Newsletter
+            {newsletterName}
           </Text>
+          {subheading ? (
+            <Text
+              fontWeight="thin"
+              style={{
+                fontSize: 12,
+                padding: "3 0",
+                textAlign: "center",
+                letterSpacing: 3,
+                fontFamily: "Assistant",
+                fontWeight: 900,
+                borderBottom: "1 solid grey",
+                // marginBottom: 10,
+              }}
+            >
+              {subheading}
+            </Text>
+          ) : null}
+
+          <View style={{ margin: "5px 0" }}></View>
 
           {articles.map((article, index) => {
             if (article.image.src) {
@@ -251,7 +276,7 @@ const Newsletter = ({ orgName, articles }) => {
           })}
         </View>
         <View fixed style={styles.footer}>
-          <Text>rbcommunity.org</Text>
+          <Text>{footerText}</Text>
           <Text
             style={styles.pageNumber}
             render={({ pageNumber, totalPages }) =>
