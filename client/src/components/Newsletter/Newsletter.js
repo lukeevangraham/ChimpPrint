@@ -36,7 +36,7 @@ Font.register({
 
 const styles = StyleSheet.create({
   page: {
-    padding: "20 20 60 20",
+    padding: "20 20 55 20",
   },
   title: {
     fontFamily: "Assistant",
@@ -60,15 +60,30 @@ const styles = StyleSheet.create({
     height: "auto",
     marginBottom: 7,
   },
-  pageNumber: {
+  footer: {
+    display: "flex",
+    flexDirection: "row",
     position: "absolute",
     fontSize: 12,
-    bottom: 30,
+    bottom: 20,
     left: 0,
     right: 0,
-    textAlign: "center",
     color: "grey",
     fontFamily: "Assistant",
+    justifyContent: "space-between",
+    padding: "10 0",
+    margin: "0 20",
+    // backgroundColor: "#e8e8e8",
+  },
+  pageNumber: {
+    // position: "absolute",
+    // fontSize: 12,
+    // bottom: 30,
+    // left: 0,
+    // right: 0,
+    // textAlign: "center",
+    // color: "grey",
+    // fontFamily: "Assistant",
   },
   article: {
     // borderBottom: "1 solid grey",
@@ -118,26 +133,23 @@ const Newsletter = ({ orgName, articles }) => {
 
   const formatTitleAndText = (article) => (
     <View>
-      {console.log("TEXT: ", article.text.split("\n"))}
       <Text minPresenceAhead={24} style={styles.title}>
         {article.headline[0].length >= 100 ? null : `${article.headline}`}
       </Text>
-      {article.text
-        .split("\n")
-        .map((text, index, array) =>
-          index > 0 && text.length > 1 ? (
-            text.charAt(0) === "\t" ? (
-              formatListItem(text)
-            ) : index === array.length - 1 ? (
-              <Text style={styles.textLast}>{text}</Text>
-            ) : (
-              <Text style={styles.text}>{text}</Text>
-            )
-            // DON'T MAKE A BIG HEADING IF THE ARTICLE STARTS WITH A LONG SENTENCE
-          ) : text.length >= 100 ? (
+      {article.text.split("\n").map((text, index, array) =>
+        index > 0 && text.length > 1 ? (
+          text.charAt(0) === "\t" ? (
+            formatListItem(text)
+          ) : index === array.length - 1 ? (
+            <Text style={styles.textLast}>{text}</Text>
+          ) : (
             <Text style={styles.text}>{text}</Text>
-          ) : null
-        )}
+          )
+        ) : // DON'T MAKE A BIG HEADING IF THE ARTICLE STARTS WITH A LONG SENTENCE
+        text.length >= 100 ? (
+          <Text style={styles.text}>{text}</Text>
+        ) : null
+      )}
     </View>
   );
 
@@ -197,7 +209,7 @@ const Newsletter = ({ orgName, articles }) => {
                       <Image
                         style={styles.shortArticleImage}
                         minPresenceAhead={80}
-                        src={`https://cors-anywhere.herokuapp.com/${article.image.src}`}
+                        src={`https://cors.grahamwebworks.com/${article.image.src}`}
                       />
                       <View style={styles.shortArticleText}>
                         {formatTitleAndText(article)}
@@ -213,8 +225,13 @@ const Newsletter = ({ orgName, articles }) => {
                       <Image
                         style={styles.image}
                         minPresenceAhead={1}
-                        src={`https://cors-anywhere.herokuapp.com/${article.image.src}`}
+                        src={`https://cors.grahamwebworks.com/${article.image.src}`}
                       />
+                      {/* <Image
+                        style={styles.image}
+                        minPresenceAhead={1}
+                        src={`https://cors-anywhere.herokuapp.com/${article.image.src}`}
+                      /> */}
                       {/* If headline is less than 100 words show it with heading */}
                       {formatTitleAndText(article)}
                     </View>
@@ -233,13 +250,16 @@ const Newsletter = ({ orgName, articles }) => {
             }
           })}
         </View>
-        <Text
-          style={styles.pageNumber}
-          render={({ pageNumber, totalPages }) =>
-            `${pageNumber} / ${totalPages}`
-          }
-          fixed
-        ></Text>
+        <View fixed style={styles.footer}>
+          <Text>rbcommunity.org</Text>
+          <Text
+            style={styles.pageNumber}
+            render={({ pageNumber, totalPages }) =>
+              `${pageNumber} / ${totalPages}`
+            }
+            fixed
+          ></Text>
+        </View>
       </Page>
     </Document>
   );
