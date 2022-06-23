@@ -6,11 +6,10 @@ import { PDFViewer } from "@react-pdf/renderer";
 
 const SelectArticles = ({ articles }) => {
   let [churchName, setChurchName] = useState("RB Community Church");
-  let [publicationTitle, setPublicationTitle] = useState("Newsletter");
+  let [publicationTitle, setPublicationTitle] = useState("Life of the Church");
   let [footerText, setFooterText] = useState("rbcommunity.org");
-  let [subheading, setSubheading] = useState("For people who like to read");
+  let [subheading, setSubheading] = useState("If you've complained about not knowing what's going on...here you go");
   let [selectedArticles, setSelectedArticles] = useState([
-    ...Array(articles.length).keys(),
   ]);
 
   const toggleArticleSelection = (e) => {
@@ -95,7 +94,6 @@ const SelectArticles = ({ articles }) => {
                       type="checkbox"
                       name={index}
                       id={index}
-                      defaultChecked
                       onChange={(e) => toggleArticleSelection(e)}
                     />
                     {article.headline}
