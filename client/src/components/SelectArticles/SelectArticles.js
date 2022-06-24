@@ -23,7 +23,7 @@ const SelectArticles = ({ articles }) => {
       // REMOVING AN ARTICLE'S INDEX FROM 'SELECTED ARTICLES'
 
       setSelectedArticles(
-        selectedArticles.filter((article) => article != e.target.id)
+        selectedArticles.filter((article) => article !== e.target.id)
       );
     }
   };
@@ -85,7 +85,7 @@ const SelectArticles = ({ articles }) => {
             />
           </div>
           <div style={{ marginTop: "2rem" }}>
-            Articles:
+            Select articles to add:
             <ul style={{ listStyle: "none" }}>
               {articles.map((article, index) => (
                 <li key={index}>

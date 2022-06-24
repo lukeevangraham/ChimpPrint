@@ -130,10 +130,10 @@ const Newsletter = ({
     src: "https://fonts.googleapis.com/css2?family=Assistant&display=swap",
   });
 
-  console.log("ARTICLES [Newsletter]: ", articles);
+  // console.log("ARTICLES [Newsletter]: ", articles);
 
-  const longArticles = articles.filter((article) => article.text.length >= 400);
-  const shortArticles = articles.filter((article) => article.text.length > 400);
+  // const longArticles = articles.filter((article) => article.text.length >= 400);
+  // const shortArticles = articles.filter((article) => article.text.length > 400);
 
   const formatListItem = (item) => <Text>&bull; {item.substring(1)}</Text>;
 
@@ -147,13 +147,13 @@ const Newsletter = ({
           text.charAt(0) === "\t" ? (
             formatListItem(text)
           ) : index === array.length - 1 ? (
-            <Text style={styles.textLast}>{text}</Text>
+            <Text key={index} style={styles.textLast}>{text}</Text>
           ) : (
-            <Text style={styles.text}>{text}</Text>
+            <Text key={index} style={styles.text}>{text}</Text>
           )
         ) : // DON'T MAKE A BIG HEADING IF THE ARTICLE STARTS WITH A LONG SENTENCE
         text.length >= 100 ? (
-          <Text style={styles.text}>{text}</Text>
+          <Text key={index} style={styles.text}>{text}</Text>
         ) : null
       )}
     </View>

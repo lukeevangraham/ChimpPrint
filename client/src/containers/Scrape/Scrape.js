@@ -47,7 +47,7 @@ const Scrape = ({ onFormSubmit }) => {
         <ol>
           <li>
             Log into{" "}
-            <a href="http://mailchimp.com" target="_blank">
+            <a rel="noreferrer" href="http://mailchimp.com" target="_blank">
               Mailchimp
             </a>
           </li>
@@ -74,6 +74,11 @@ const Scrape = ({ onFormSubmit }) => {
           </li>
         </ol>
       </div>
+      <div onClick={() =>
+          setArchiveUrl(
+            "https://us11.campaign-archive.com/home/?u=16a7d00c97055ae7a7fe916ec&id=952a98efb9"
+          )
+        } style={{ marginTop: "2rem", cursor: "pointer" }}>Want a sample url? Click here</div>
     </>
   );
 
