@@ -55,6 +55,12 @@ const styles = StyleSheet.create({
     margin: "0",
     lineHeight: "1.5",
   },
+  textList: {
+    fontSize: 12,
+    fontFamily: "Cardo",
+    margin: "0 0 0 10",
+    // lineHeight: "1.5",
+  },
   image: {
     maxWidth: "50%",
     height: "auto",
@@ -135,10 +141,11 @@ const Newsletter = ({
   // const longArticles = articles.filter((article) => article.text.length >= 400);
   // const shortArticles = articles.filter((article) => article.text.length > 400);
 
-  const formatListItem = (item) => <Text>&bull; {item.substring(1)}</Text>;
+  const formatListItem = (item) => <Text style={styles.textList}>&bull; {item.substring(1)}</Text>;
 
   const formatTitleAndText = (article) => (
     <View>
+      {console.log("ARTICLE: ", article)}
       <Text minPresenceAhead={24} style={styles.title}>
         {article.headline[0].length >= 100 ? null : `${article.headline}`}
       </Text>
