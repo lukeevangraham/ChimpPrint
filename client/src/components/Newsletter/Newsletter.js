@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
     margin: "0 0 0 10",
     // lineHeight: "1.5",
   },
+  textListLast: {
+    fontSize: 12,
+    fontFamily: "Cardo",
+    margin: "0 0 9 10",
+  },
   image: {
     maxWidth: "50%",
     height: "auto",
@@ -141,26 +146,46 @@ const Newsletter = ({
   // const longArticles = articles.filter((article) => article.text.length >= 400);
   // const shortArticles = articles.filter((article) => article.text.length > 400);
 
-  const formatListItem = (item) => <Text style={styles.textList}>&bull; {item.substring(1)}</Text>;
+  const formatListItem = (item, index, array) => {
+// THE LAST LIST ITEM NEEDS SPACING BELOW, HENCE THE CONDITIONAL
+    if (array[index + 1].charAt(0) === "\t") {
+      return (
+        <Text key={index} style={styles.textList}>
+          &bull; {item.substring(1)}
+        </Text>
+      );
+    } else {
+      return (
+        <Text key={index} style={styles.textListLast}>
+          &bull; {item.substring(1)}
+        </Text>
+      );
+    }
+  };
 
   const formatTitleAndText = (article) => (
     <View>
-      {console.log("ARTICLE: ", article)}
       <Text minPresenceAhead={24} style={styles.title}>
         {article.headline[0].length >= 100 ? null : `${article.headline}`}
       </Text>
       {article.text.split("\n").map((text, index, array) =>
         index > 0 && text.length > 1 ? (
           text.charAt(0) === "\t" ? (
-            formatListItem(text)
+            formatListItem(text, index, array)
           ) : index === array.length - 1 ? (
-            <Text key={index} style={styles.textLast}>{text}</Text>
+            <Text key={index} style={styles.textLast}>
+              {text}
+            </Text>
           ) : (
-            <Text key={index} style={styles.text}>{text}</Text>
+            <Text key={index} style={styles.text}>
+              {text}
+            </Text>
           )
         ) : // DON'T MAKE A BIG HEADING IF THE ARTICLE STARTS WITH A LONG SENTENCE
         text.length >= 100 ? (
-          <Text key={index} style={styles.text}>{text}</Text>
+          <Text key={index} style={styles.text}>
+            {text}
+          </Text>
         ) : null
       )}
     </View>
