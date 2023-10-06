@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import Intro from "../../components/Intro/Intro";
+import { Typography, List, ListItemText } from "@mui/material";
 
 const Scrape = ({ onFormSubmit }) => {
   let [archiveURL, setArchiveUrl] = useState("");
@@ -18,9 +20,9 @@ const Scrape = ({ onFormSubmit }) => {
 
   const getArchiveListForm = (
     <>
-      <div style={{ marginBottom: "1rem" }}>
+      <Typography style={{ marginBottom: "0rem" }}>
         Enter a MailChimp Campaign Archive URL to source from:
-      </div>
+      </Typography>
       <TextField
         variant="standard"
         onChange={(e) => setArchiveUrl(e.target.value)}
@@ -37,52 +39,64 @@ const Scrape = ({ onFormSubmit }) => {
       <div
         style={{
           maxWidth: "600px",
-          marginTop: "2.5rem",
+          marginTop: "3rem",
           backgroundColor: "#d3d3d3",
           borderRadius: "7px",
           padding: "1rem",
         }}
       >
-        <div>To find your Campaign Archive URL follow these steps:</div>
-        <ol>
-          <li>
+        <Typography>
+          To find your Campaign Archive URL follow these steps:
+        </Typography>
+        <List sx={{ listStyle: "decimal", pl: 4, fontFamily: "sans-serif" }}>
+          <ListItemText sx={{ display: "list-item" }}>
             Log into{" "}
             <a rel="noreferrer" href="http://mailchimp.com" target="_blank">
               Mailchimp
             </a>
-          </li>
-          <li>
+          </ListItemText>
+          <ListItemText sx={{ display: "list-item" }}>
             Click <i>Campaigns</i>
-          </li>
-          <li>
+          </ListItemText>
+          <ListItemText sx={{ display: "list-item" }}>
             Next to (or under) your Campaign you'll see a button called{" "}
             <i>Sent Campaign</i> or <i>View Report</i> or <i>Edit</i> (the
             wording depends on the type of Campaign). Click the down arrow to
             the right of the words.{" "}
-          </li>
-          <li>
+          </ListItemText>
+          <ListItemText sx={{ display: "list-item" }}>
             Click <i>View email</i>.
-          </li>
-          <li>
+          </ListItemText>
+          <ListItemText sx={{ display: "list-item" }}>
             You'll now see an email that was sent as part of your Campaign.
             Click <i>Past Issues</i> which is near the top of the screen.
-          </li>
-          <li>
+          </ListItemText>
+          <ListItemText sx={{ display: "list-item" }}>
             You are now seeing a list (archive) of sent Campaigns. The link to
             the archive will be in your Internet Browser (e.g. Google Chrome,
             Safari, Firefox, etc.) address bar.
-          </li>
-        </ol>
+          </ListItemText>
+        </List>
       </div>
-      <div onClick={() =>
+      <Typography
+        onClick={() =>
           setArchiveUrl(
             "https://us11.campaign-archive.com/home/?u=16a7d00c97055ae7a7fe916ec&id=952a98efb9"
           )
-        } style={{ marginTop: "2rem", cursor: "pointer" }}>Want a sample url? Click here</div>
+        }
+        style={{ marginTop: "2rem", cursor: "pointer", color: "blue", textDecoration: "underline", marginBottom: "2rem" }}
+      >
+        Want a sample url? Click here
+      </Typography>
     </>
   );
 
-  return <>{getArchiveListForm}</>;
+  return (
+    <>
+      <Intro />
+      {getArchiveListForm}
+    </>
+  );
 };
 
 export default Scrape;

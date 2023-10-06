@@ -1,0 +1,14 @@
+.Header {
+  // background-color: orangered;
+  display: flex;
+  align-items: center;
+  margin: 3rem auto;
+  background-color: #dddddd;
+  padding: 1rem;
+  border-radius: 7px;
+
+  &__text {
+    margin-right: 2rem;
+    flex: 0 0 40%;
+  }
+}
