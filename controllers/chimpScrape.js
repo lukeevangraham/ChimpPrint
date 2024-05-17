@@ -7,6 +7,8 @@ module.exports = {
     try {
       let response = await scrape(req.body.url);
 
+      console.log("Scraping: ", req.body.url)
+
       res.json({
         campaigns: response,
       });
