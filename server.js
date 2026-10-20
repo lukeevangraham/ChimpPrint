@@ -1,8 +1,15 @@
+// Polyfill global streams for modern dependencies running on Node 16
+if (typeof global.ReadableStream === "undefined") {
+  const { ReadableStream } = require("node:stream/web");
+  global.ReadableStream = ReadableStream;
+}
+
+// ... rest of your server.js requires (express, sequelize, etc.)
+
 const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 6493;
 const app = express();
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
