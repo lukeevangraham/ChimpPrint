@@ -1,3 +1,19 @@
+// Polyfill web standards required by modern sub-dependencies on Node 16
+const { ReadableStream } = require("stream/web");
+if (typeof global.ReadableStream === "undefined") {
+  global.ReadableStream = ReadableStream;
+}
+if (typeof global.Blob === "undefined") {
+  const { Blob } = require("buffer");
+  global.Blob = Blob;
+}
+if (typeof global.File === "undefined") {
+  const { File } = require("buffer");
+  global.File = File;
+}
+
+// ... rest of your server.js requires (express, sequelize, etc.)
+
 // Polyfill global streams for modern dependencies running on Node 16
 if (typeof global.ReadableStream === "undefined") {
   const { ReadableStream } = require("node:stream/web");
