@@ -18,8 +18,6 @@ const SelectCampaigns = ({ campaigns, changeCampaigns, setArticles }) => {
       issues: campaignsToGet,
     });
 
-
-
     setArticles(response.data.articles.flat());
 
     return response;
@@ -29,7 +27,7 @@ const SelectCampaigns = ({ campaigns, changeCampaigns, setArticles }) => {
     if (campaigns.length > 0) {
       // console.log("VAL: ", campaigns[index].selected);
       const newCampaigns = campaigns.map((c) =>
-        c.url === index ? { ...c, selected: !c.selected } : c
+        c.url === index ? { ...c, selected: !c.selected } : c,
       );
 
       changeCampaigns(newCampaigns);

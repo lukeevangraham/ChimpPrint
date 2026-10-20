@@ -1,29 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import Newsletter from "../Newsletter/Newsletter";
 import { PDFViewer } from "@react-pdf/renderer";
 
 const SelectArticles = ({ articles }) => {
+  // 1. Controlled form state for immediate input updates
   let [churchName, setChurchName] = useState("RB Community Church");
   let [publicationTitle, setPublicationTitle] = useState("Life of the Church");
   let [footerText, setFooterText] = useState("rbcommunity.org");
-  let [subheading, setSubheading] = useState("If you've complained about not knowing what's going on...here you go");
-  let [selectedArticles, setSelectedArticles] = useState([
-  ]);
+  let [subheading, setSubheading] = useState(
+    "If you've complained about not knowing what's going on...here you go",
+  );
+
+  // 2. Debounced state passed exclusively to the PDFViewer component
+  let [debouncedMeta, setDebouncedMeta] = useState({
+    churchName,
+    publicationTitle,
+    footerText,
+    subheading,
+  });
+
+  let [selectedArticles, setSelectedArticles] = useState([]);
+
+  // 3. Debounce effect: triggers PDF re-render 400ms after typing stops
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedMeta({
+        churchName,
+        publicationTitle,
+        footerText,
+        subheading,
+      });
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [churchName, publicationTitle, footerText, subheading]);
 
   const toggleArticleSelection = (e) => {
     if (e.target.checked) {
       // RETURNING AN ARTICLE'S INDEX TO 'SELECTED ARTICLES'
-
       setSelectedArticles(
-        [...selectedArticles, e.target.id].sort((a, b) => a - b)
+        [...selectedArticles, e.target.id].sort((a, b) => a - b),
       );
     } else if (!e.target.checked) {
       // REMOVING AN ARTICLE'S INDEX FROM 'SELECTED ARTICLES'
-
       setSelectedArticles(
-        selectedArticles.filter((article) => article !== e.target.id)
+        selectedArticles.filter((article) => article !== e.target.id),
       );
     }
   };
@@ -40,18 +63,13 @@ const SelectArticles = ({ articles }) => {
         <div style={{ gridColumn: "1 / 2", padding: "2rem" }}>
           <PDFViewer width="100%" height="100%">
             <Newsletter
-              orgName={churchName}
-              newsletterName={publicationTitle}
-              footerText={footerText}
-              subheading={subheading}
+              orgName={debouncedMeta.churchName}
+              newsletterName={debouncedMeta.publicationTitle}
+              footerText={debouncedMeta.footerText}
+              subheading={debouncedMeta.subheading}
               articles={selectedArticles.map((article) => articles[article])}
             />
           </PDFViewer>
-          {/* News
-          <Box sx={{ display: "grid", gridTemplateRows: "12px 35px 17px 1fr" }}>
-            <div style={{ gridRow: "1/2" }}>{orgName}</div>
-            <div style={{ gridRow: "2/3" }}>Newsletter</div>
-          </Box> */}
         </div>
         <div style={{ gridColumn: "2 / 3" }}>
           <div>
@@ -101,17 +119,8 @@ const SelectArticles = ({ articles }) => {
                 </li>
               ))}
             </ul>
-            {/* {articles[0].map((article, index) => (
-              <div key={index}>
-                {article.headline}
-              </div>
-            ))} */}
           </div>
         </div>
-        {/* {articles[0].map((article) => (
-        //   <div>{article.headline}</div>
-        <div dangerouslySetInnerHTML={{ __html: article.html }}></div>
-    ))} */}
       </Box>
     </>
   );

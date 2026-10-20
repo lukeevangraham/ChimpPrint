@@ -16,15 +16,19 @@ const App = () => {
   let [articles, setArticles] = useState([]);
 
   const clearState = () => {
-    setArchive([])
-    setArticles([])
-  }
+    setArchive([]);
+    setArticles([]);
+  };
 
   return (
     <>
       <AppBar sx={{ mb: 2 }} position="static">
         <Toolbar>
-          <Typography onClick={clearState} variant="h6" sx={{ cursor: "pointer" }}>
+          <Typography
+            onClick={clearState}
+            variant="h6"
+            sx={{ cursor: "pointer" }}
+          >
             ChimpPrint
           </Typography>
         </Toolbar>

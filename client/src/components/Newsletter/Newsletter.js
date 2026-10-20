@@ -147,8 +147,9 @@ const Newsletter = ({
   // const shortArticles = articles.filter((article) => article.text.length > 400);
 
   const formatListItem = (item, index, array) => {
-// THE LAST LIST ITEM NEEDS SPACING BELOW, HENCE THE CONDITIONAL
-    if (array[index + 1].charAt(0) === "\t") {
+    // THE LAST LIST ITEM NEEDS SPACING BELOW, HENCE THE CONDITIONAL
+    // Safely check if next item exists before calling .charAt(0)
+    if (array[index + 1] && array[index + 1].charAt(0) === "\t") {
       return (
         <Text key={index} style={styles.textList}>
           &bull; {item.substring(1)}
@@ -186,7 +187,7 @@ const Newsletter = ({
           <Text key={index} style={styles.text}>
             {text}
           </Text>
-        ) : null
+        ) : null,
       )}
     </View>
   );
